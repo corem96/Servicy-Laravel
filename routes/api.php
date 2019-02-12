@@ -19,3 +19,4 @@ use Illuminate\Http\Request;
 
 Route::apiResource('clients', 'ClientController');
 Route::apiResource('services', 'ServiceController');
+Route::apiResource('agendas', 'AgendaController');

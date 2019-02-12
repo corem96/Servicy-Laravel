@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Agenda;
+use App\Http\Resources\Agenda as AgendaResource;
 use Illuminate\Http\Request;
+use App\Http\Resources\AgendaCollection;
 
 class AgendaController extends Controller
 {
@@ -14,17 +16,7 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new AgendaCollection(Agenda::all());
     }
 
     /**
@@ -35,7 +27,9 @@ class AgendaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $agenda = Agenda::create($request->all());
+
+        return new AgendaResource($agenda);
     }
 
     /**
@@ -46,18 +40,7 @@ class AgendaController extends Controller
      */
     public function show(Agenda $agenda)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Agenda  $agenda
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Agenda $agenda)
-    {
-        //
+        return new AgendaResource($agenda);
     }
 
     /**
@@ -69,7 +52,9 @@ class AgendaController extends Controller
      */
     public function update(Request $request, Agenda $agenda)
     {
-        //
+        $agenda->update(
+            $request->only(['start_at', 'ends_at'])
+        );
     }
 
     /**
@@ -80,6 +65,8 @@ class AgendaController extends Controller
      */
     public function destroy(Agenda $agenda)
     {
-        //
+        $agenda->delete();
+
+        return response()->json(null, 204);
     }
 }
