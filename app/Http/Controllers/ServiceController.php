@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Service;
 use Illuminate\Http\Request;
+use App\Http\Resources\Service as ServiceResource;
+use App\Http\Resources\ServiceCollection;
 
 class ServiceController extends Controller
 {
@@ -14,17 +16,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new ServiceCollection(Service::all());
     }
 
     /**
@@ -35,7 +27,9 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $service = Service::create($request->all());
+
+        return new ServiceResource($service);
     }
 
     /**
@@ -46,18 +40,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Service  $service
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Service $service)
-    {
-        //
+        return new ServiceResource($service);
     }
 
     /**
@@ -69,7 +52,9 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        //
+        $service->update(
+            $request->only(['name', 'details', 'price'])
+        );
     }
 
     /**
@@ -80,6 +65,8 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        $service->delete();
+
+        return response()->json(null, 204);
     }
 }
