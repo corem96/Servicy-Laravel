@@ -16,7 +16,7 @@ class CreateServiceRequestedTable extends Migration
         Schema::create('service_requested', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('price', 10,2);
-            $table->boolean('is_provided');
+            $table->boolean('is_provided')->default(false);
 
             $table->unsignedInteger('appointment_id');
             $table->foreign('appointment_id')->references('id')->on('appointments');

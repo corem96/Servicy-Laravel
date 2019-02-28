@@ -27,15 +27,15 @@ class CreateAppointmentsTable extends Migration
 
             $table->string('client_name', 250);
             $table->string('client_contact', 128);
-            $table->decimal('price_expected', 10,2);
-            $table->decimal('price_full', 10,2);
-            $table->decimal('discount', 10,2);
-            $table->decimal('price_final', 10,2);
-            $table->boolean('canceled');
-            $table->text('cancelation_reason');
-            $table->timestamp('start_at');
-            $table->timestamp('ends_at_expected');
-            $table->timestamp('ends_at');
+            $table->decimal('price_expected', 10,2)->default(0);
+            $table->decimal('price_full', 10,2)->default(0);
+            $table->decimal('discount', 10,2)->default(0);
+            $table->decimal('price_final', 10,2)->default(0);
+            $table->boolean('canceled')->default(false);
+            $table->text('cancelation_reason')->nullable();
+            $table->timestamp('start_at')->useCurrent();
+            $table->timestamp('ends_at_expected')->nullable();
+            $table->timestamp('ends_at')->nullable();
             $table->timestamps();
         });
     }

@@ -22,7 +22,7 @@ class CreateAgendasTable extends Migration
                 ->on('users');
 
             $table->timestamp('start_at')->useCurrent();
-            $table->timestamp('ends_at');
+            $table->timestamp('ends_at')->nullable();
             $table->timestamps();
 
         });
